@@ -4,3 +4,5 @@ merge_to_confuturo-entrada:
     - git pull origin develop
   only:
     - develop
+  tags: #tag para que no de error de imagen // no tomar en cuenta para una configuración real
+    - shell
