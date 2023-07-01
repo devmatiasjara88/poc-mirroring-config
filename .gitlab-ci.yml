@@ -1,0 +1,6 @@
+merge_to_confuturo-entrada:
+  script:
+    - git checkout confuturo-entrada
+    - git pull origin develop
+  only:
+    - develop
