@@ -1,7 +1,11 @@
 merge_to_confuturo-entrada:
   script:
-    - git checkout confuturo-entrada
-    - git pull origin develop
+    - >
+      curl --request POST --header "PRIVATE-TOKEN: $CI_JOB_TOKEN"
+      --form "source_branch=develop" --form "target_branch=confuturo-entrada"
+      --form "title=Merge develop to confuturo-entrada"
+      --form "description=This merge request is automatically created by the pipeline."
+      "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests"
   only:
     - develop
-  image: alpine:latest
+  image: alpine:latest #esta image es solo para que el runner no falle, no es necesario en configuraciones reales
