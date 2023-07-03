@@ -14,6 +14,7 @@ merge_to_confuturo-entrada:
       echo "Merge Request RESPONSE: $MERGE_REQUEST_RESPONSE"
       MERGE_REQUEST_IID=$(echo "${MERGE_REQUEST_RESPONSE}" | jq -r '.iid')
       echo "Merge Request ID: ${MERGE_REQUEST_IID}"
+      echo "--header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" --request PUT "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests/${MERGE_REQUEST_IID}/merge"
       MERGE=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" --request PUT "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests/${MERGE_REQUEST_IID}/merge")
       echo "Merge Finalizado: $MERGE"
   only:
