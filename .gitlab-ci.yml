@@ -5,7 +5,7 @@ merge_to_confuturo-entrada:
     - apk add curl jq
   script:
     - MESSAGE="probando variable"
-    - echo '$MESSAGE'
+    - echo $MESSAGE
 
     #- >
     #  merge_request_response=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" 
