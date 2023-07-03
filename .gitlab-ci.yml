@@ -11,7 +11,7 @@ merge_to_confuturo-entrada:
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests")
       
       merge_request_id=$(echo "$merge_request_response" | jq '.id')
-
+      echo "Merge Request ID: merge_request"
       curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" --request POST
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests/$merge_request_id/approve"
   only:
