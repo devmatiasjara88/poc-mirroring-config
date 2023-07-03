@@ -1,5 +1,8 @@
 merge_to_confuturo-entrada:
-  image: stedolan/jq
+  image: alpine
+  before_script:
+    - apk update
+    - apk add curl jq
   script:
     - >
       merge_request_response=$(curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" --request POST 
