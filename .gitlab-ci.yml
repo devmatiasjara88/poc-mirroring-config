@@ -3,7 +3,7 @@ merge_to_confuturo-entrada:
   script:
     - >
       merge_request_response=$(curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" --resquest POST 
-      --form "source_branch=develop" --form "target_branch"=confuturo-entrada"
+      --form "source_branch=develop" --form "target_branch=confuturo-entrada"
       --form "title=Merge develop to confuturo-entrada"
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests")
       
