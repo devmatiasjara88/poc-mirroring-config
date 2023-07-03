@@ -4,17 +4,18 @@ merge_to_confuturo-entrada:
     - apk update
     - apk add curl jq
   script:
-    - MESSAGE="probando variable"
-    - echo "$MESSAGE"
+    #- MESSAGE="probando variable"
+    #- echo "$MESSAGE"
 
-    #- >
-    #  merge_request_response=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" 
-    #  --request POST --form "source_branch=develop" 
-    #  --form "target_branch=confuturo-entrada" 
-    #  --form "title=Merge develop to confuturo-entrada" 
-    #  "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests")
-    #  echo "Merge Request RESPONSE: ${merge_request_response}"
-    #  merge_request_id=$(echo "${merge_request_response}" | jq -r '.id')
+    - |
+      MERGE_REQUEST_RESPONSE=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" \
+      --request POST --form "source_branch=develop" \
+      --form "target_branch=confuturo-entrada" \
+      --form "title=Merge develop to confuturo-entrada" \
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests")
+    
+      echo "Merge Request RESPONSE: $MERGE_REQUEST_RESPONSE"
+    #  merge_request_id=$(echo "${MERGE_REQUEST_RESPONSE}" | jq -r '.id')
     #  echo "Merge Request ID: ${merge_request_id}"
     # curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" 
     #  --request POST 
