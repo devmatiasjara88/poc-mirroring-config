@@ -16,5 +16,5 @@ merge_to_confuturo-entrada:
       curl --header "PRIVATE-TOKEN: $CI_JOB_TOKEN" 
       --request POST 
       "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests/$merge_request_id/approve"
-    only:
+  only:
     - develop
