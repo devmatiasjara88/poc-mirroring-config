@@ -1,0 +1,20 @@
+merge_to_confuturo-entrada:
+  image: alpine
+  before_script:
+    - apk update
+    - apk add curl jq
+  script:   
+    - |
+      MERGE_REQUEST_RESPONSE=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" \
+      --request POST --form "source_branch=develop" \
+      --form "target_branch=confuturo-entrada" \
+      --form "title=Merge develop to confuturo-entrada" \
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests")
+    
+      echo "Merge Request RESPONSE: $MERGE_REQUEST_RESPONSE"
+      MERGE_REQUEST_ID=$(echo "${MERGE_REQUEST_RESPONSE}" | jq -r '.id')
+      echo "Merge Request ID: ${MERGE_REQUEST_ID}"
+      MERGE_APPROVE=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" --request POST "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests/${MERGE_REQUEST_ID}/approve")
+      echo "Merge Finalizado: $MERGE_APPROVE" 
+  only:
+    - develop
