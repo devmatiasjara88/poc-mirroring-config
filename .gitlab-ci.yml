@@ -3,6 +3,7 @@ stages:
 image: alpine
 variable:
   - MERGE_REQUEST_RESPONSE
+  
 create_merge_request:
   stage: sync
   before_script:
@@ -21,6 +22,7 @@ create_merge_request:
     - develop
   tags: 
     - gcp
+
 merge_request_gitlab:
   stage: sync
   needs: [create_merge_request]
