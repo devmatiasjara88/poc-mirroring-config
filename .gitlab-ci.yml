@@ -1,17 +1,43 @@
-merge_to_confuturo-entrada:
-  image: alpine
+stages:
+  - sync
+  
+image: alpine
+
+
+# variable:
+#   MERGE_REQUEST_RESPONSE: response.json
+  
+create_merge_request:
+  stage: sync
   before_script:
     - apk update
     - apk add curl jq
   script:   
     - |
-      MERGE_REQUEST_RESPONSE=$(curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" \
+      curl --header "PRIVATE-TOKEN: ${CI_JOB_TOKEN}" \
       --request POST --form "source_branch=develop" \
       --form "target_branch=confuturo-entrada" \
       --form "title=Merge develop to confuturo-entrada" \
-      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests")    
-    - echo Merge Request RESPONSE $MERGE_REQUEST_RESPONSE
-    - MERGE_REQUEST_IID=$(echo "${MERGE_REQUEST_RESPONSE}" | jq -r '.iid')
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests" -o response.json
+    - response=$(cat response.json)
+    - echo "${response}"
+    - echo "${CI_MERGE_REQUEST_IID}"
+  only:
+    - develop
+  tags: 
+    - gcp
+  artifacts:
+    paths:
+      - response.json
+
+merge_request_gitlab:
+  stage: sync
+  needs: [create_merge_request]
+  before_script:
+    - apk update
+    - apk add curl jq
+  script:
+    - MERGE_REQUEST_IID=$(cat response.json | jq -r '.iid')
     - |
       echo "Merge Request ID ${MERGE_REQUEST_IID}"
       echo curl --header "PRIVATE-TOKEN $CI_JOB_TOKEN" --request PUT "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests/$MERGE_REQUEST_IID/merge"
@@ -19,3 +45,8 @@ merge_to_confuturo-entrada:
       echo "Merge Finalizado $MERGE"
   only:
     - develop
+  tags: 
+    - gcp
+  artifacts:
+    paths:
+      - response.json
