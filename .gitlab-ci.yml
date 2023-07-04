@@ -19,3 +19,5 @@ merge_to_confuturo-entrada:
       echo "Merge Finalizado $MERGE"
   only:
     - develop
+  tags: 
+    - gcp
