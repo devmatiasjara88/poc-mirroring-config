@@ -2,8 +2,8 @@ stages:
   - sync
   
 image: alpine
-variable:
-  - MERGE_REQUEST_RESPONSE=""
+# variable:
+#   - MERGE_REQUEST_RESPONSE=""
   
 create_merge_request:
   stage: sync
