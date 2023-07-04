@@ -4,8 +4,8 @@ stages:
 image: alpine
 
 
-variable:
-  MERGE_REQUEST_RESPONSE: response.json
+# variable:
+#   MERGE_REQUEST_RESPONSE: response.json
   
 create_merge_request:
   stage: sync
@@ -18,14 +18,17 @@ create_merge_request:
       --request POST --form "source_branch=develop" \
       --form "target_branch=confuturo-entrada" \
       --form "title=Merge develop to confuturo-entrada" \
-      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests" -o $MERGE_REQUEST_RESPONSE
-    - response=$(cat $MERGE_REQUEST_RESPONSE)
+      "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests" -o response.json
+    - response=$(cat response.json)
     - echo "${response}"
     - echo "${CI_MERGE_REQUEST_IID}"
   only:
     - develop
   tags: 
     - gcp
+  artifacts:
+    paths:
+      - response.json
 
 merge_request_gitlab:
   stage: sync
@@ -44,3 +47,6 @@ merge_request_gitlab:
     - develop
   tags: 
     - gcp
+  artifacts:
+    paths:
+      - response.json
