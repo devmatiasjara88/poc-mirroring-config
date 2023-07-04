@@ -47,6 +47,6 @@ merge_request_gitlab:
     - develop
   tags: 
     - gcp
-  artifacts:
-    paths:
-      - response.json
+  # artifacts:
+  #   paths:
+  #     - response.json
