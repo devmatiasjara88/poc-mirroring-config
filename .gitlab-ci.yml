@@ -37,7 +37,7 @@ merge_request_gitlab:
     - apk update
     - apk add curl jq
   script:
-    - MERGE_REQUEST_IID=$(cat "${MERGE_REQUEST_RESPONSE}" | jq -r '.iid')
+    - MERGE_REQUEST_IID=$(cat response.json | jq -r '.iid')
     - |
       echo "Merge Request ID ${MERGE_REQUEST_IID}"
       echo curl --header "PRIVATE-TOKEN $CI_JOB_TOKEN" --request PUT "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/merge_requests/$MERGE_REQUEST_IID/merge"
