@@ -18,7 +18,7 @@ create_merge_request:
       --form "title=Merge develop to confuturo-entrada" \
       "https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/merge_requests")    
     - echo Merge Request RESPONSE $MERGE_REQUEST_RESPONSE
-    - echo iid $CI_MERGE_REQUEST_IID    
+    - echo "iid $CI_MERGE_REQUEST_IID"
   only:
     - develop
   tags: 
